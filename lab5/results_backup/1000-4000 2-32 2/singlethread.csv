@@ -1,0 +1,5 @@
+Type;MatrixSize;Time;
+SingleThread;1000;5.61294;
+SingleThread;2000;42.4105;
+SingleThread;4000;341.864;
+SingleThread;8000;2770.04;

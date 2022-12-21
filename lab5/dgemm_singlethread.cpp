@@ -28,9 +28,6 @@ int main(int argc, char **argv) {
     for (int j = 0; j < size; j++) {
       *(a + i * size + j) = rand() % 1000 + rand() / 1000;
       *(b + i * size + j) = rand() % 1000 + rand() / 1000;
-      // *(a + i * size + j) = j;
-      // if (i == j) *(b + i * size + j) = 1;
-      // else *(b + i * size + j) = 0;
     }
   }
   auto r_tnow = std::chrono::high_resolution_clock::now();
@@ -41,7 +38,7 @@ int main(int argc, char **argv) {
        << "\n";
 
   ofstream out("singlethread.csv", ios_base::app);
-  out << "SingleThread" << size << ";" << (double)r_time.count() * 1e-9
+  out << "SingleThread" << ";" << size << ";" << (double)r_time.count() * 1e-9
       << ";\n";
   out.close();
   return 0;

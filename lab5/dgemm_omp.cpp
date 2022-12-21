@@ -39,22 +39,47 @@ int main(int argc, char **argv) {
 
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
+	  /*
       *(a + i * size + j) = rand() % 1000 + rand() / 1000;
       *(b + i * size + j) = rand() % 1000 + rand() / 1000;
-      // *(a + i * size + j) = j;
-      // if (i == j) *(b + i * size + j) = 1;
-      // else *(b + i * size + j) = 0;
+	  */
+	  
+      *(a + i * size + j) = j;
+      if (i == j) *(b + i * size + j) = 1;
+      else *(b + i * size + j) = 0;
+	  
     }
   }
   auto r_tnow = std::chrono::high_resolution_clock::now();
   dgemm_omp(a, b, c, size, num_th);
   auto r_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
       std::chrono::high_resolution_clock::now() - r_tnow);
+	  
+  
+  for (int i = 0; i < size * size; i++) {
+      cout << *(a + i) << " ";
+      if ((i + 1) % size == 0)
+      cout << "\n";
+  }
+  cout << "\n\n";
+  for (int i = 0; i < size * size; i++) {
+      cout << *(b + i) << " ";
+      if ((i + 1) % size == 0)
+      cout<<"\n";
+  }
+  cout << "\n\n";
+  for (int i = 0; i < size * size; i++) {
+      cout << *(c + i) << " ";
+      if ((i + 1) % size == 0)
+      cout << "\n";
+  }
+  
+	  
   cout << "OMP " << size << " " << num_th << " "
        << (double)r_time.count() * 1e-9 << "\n";
 
   ofstream out("omp.csv", ios_base::app);
-  out << "OMP" << size << ";" << num_th << ";" << (double)r_time.count() * 1e-9
+  out << "OMP" << ";" << size << ";" << num_th << ";" << (double)r_time.count() * 1e-9
       << ";\n";
   out.close();
   return 0;

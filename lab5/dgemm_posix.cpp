@@ -67,11 +67,15 @@ int main(int argc, char *argv[]) {
   matrix.n = size;
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
+	  /*
       *(matrix.a + i * size + j) = rand() % 1000 + rand() / 1000;
       *(matrix.b + i * size + j) = rand() % 1000 + rand() / 1000;
-      // *(matrix.a + i * size + j) = j;
-      // if (i == j) *(matrix.b + i * size + j) = 1;
-      // else *(matrix.b + i * size + j) = 0;
+	  */
+	  
+      *(matrix.a + i * size + j) = j;
+      if (i == j) *(matrix.b + i * size + j) = 1;
+      else *(matrix.b + i * size + j) = 0;
+	  
     }
   }
   auto r_tnow = std::chrono::high_resolution_clock::now();
@@ -83,33 +87,30 @@ int main(int argc, char *argv[]) {
   }
   auto r_time = std::chrono::duration_cast<std::chrono::nanoseconds>(
       std::chrono::high_resolution_clock::now() - r_tnow);
-  /*
-   for (int i = 0; i < size * size; i++) {
-
-            cout<<matrix.a[i]<<" ";
-            if ((i + 1) % size == 0)
-            cout<<"\n";
-    }
-    cout<<"\n\n";
-    for (int i = 0; i < size * size; i++) {
-
-            cout<<matrix.b[i]<<" ";
-            if ((i + 1) % size == 0)
-            cout<<"\n";
-    }
-    cout<<"\n\n";
-    for (int i = 0; i < size * size; i++) {
-
-            cout<<matrix.c[i]<<" ";
-            if ((i + 1) % size == 0)
-            cout<<"\n";
-    }
-  */
+  
+  for (int i = 0; i < size * size; i++) {
+      cout << *(matrix.a + i) << " ";
+      if ((i + 1) % size == 0)
+      cout << "\n";
+  }
+  cout << "\n\n";
+  for (int i = 0; i < size * size; i++) {
+      cout << *(matrix.b + i) << " ";
+      if ((i + 1) % size == 0)
+      cout<<"\n";
+  }
+  cout << "\n\n";
+  for (int i = 0; i < size * size; i++) {
+      cout << *(matrix.c + i) << " ";
+      if ((i + 1) % size == 0)
+      cout << "\n";
+  }
+  
   cout << "POSIX " << size << " " << num_th << " "
        << (double)r_time.count() * 1e-9 << "\n";
 
   ofstream out("posix.csv", ios_base::app);
-  out << "POSIX" << size << ";" << num_th << ";"
+  out << "POSIX" << ";" << size << ";" << num_th << ";"
       << (double)r_time.count() * 1e-9 << ";\n";
   out.close();
 }
